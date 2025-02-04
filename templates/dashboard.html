@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Vehicle Dashboard</title>
+  <!-- Add a link to your CSS file here -->
+  <style>
+    body {
+      background-color: #95a4ab;
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0 auto;
+  max-width: 1200px;
+  padding: 20px;
+}
+
+.top-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.bottom-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.speed-container,
+.fuel-container,
+.rpm-container {
+  background-color: #4169e1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 300px;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin-right: 50px;
+}
+
+.kpi-container,.right {
+  background-color: #7b93de;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  padding: 20px;
+  border: 1px solid rgb(0, 0, 0);
+  border-radius: 5px;
+  margin-top: 150px;
+  margin-right: 200px;
+
+}
+
+
+h2 {
+  margin: 0 0 10px 0;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+td,
+th {
+  border: 1px solid rgb(110, 75, 75);
+  padding: 8px;
+}
+
+tr:nth-child(even) {
+  background-color: #abdaef;;
+}
+
+tr:nth-child(odd) {
+  background-color: #62a2bd;;
+}
+
+tr td[value*="Yes"] {
+  background-color: red; /* or any other color */
+}
+
+
+th {
+  background-color: #000000;
+  color: white;
+}
+.bar-container {
+  position: relative; /* set the container to be positioned relative to its parent */
+  width: 300px; /* set the width of the container as desired */
+  height: 30px; /* set the height of the container as desired */
+  border: 1px solid #ccc; /* add a border around the container */
+  border-radius: 5px; /* add rounded corners to the container */
+}
+
+.bar-slider {
+  -webkit-appearance: none; /* remove the default appearance of the range input */
+  width: 100%; /* set the width of the slider to fill the container */
+  height: 100%; /* set the height of the slider to fill the container */
+  background-color: #ddd; /* set the background color of the bar */
+  border-radius: 5px; /* add rounded corners to the bar */
+}
+
+.bar-slider::-webkit-slider-thumb {
+  -webkit-appearance: none; /* remove the default appearance of the thumb */
+  width: 15px; /* set the width of the thumb as desired */
+  height: 15px; /* set the height of the thumb as desired */
+  background-color: #000; /* set the background color of the thumb */
+  border-radius: 50%; /* add rounded corners to the thumb */
+  cursor: pointer; /* make the thumb look like a button */
+}
+
+.bar-slider::-moz-range-thumb {
+  width: 15px; /* set the width of the thumb as desired */
+  height: 15px; /* set the height of the thumb as desired */
+  background-color: #000; /* set the background color of the thumb */
+  border-radius: 50%; /* add rounded corners to the thumb */
+  cursor: pointer; /* make the thumb look like a button */
+}
+
+.value-label {
+  position: absolute; /* position the label over the bar */
+  top: 0; /* align the label with the top of the bar */
+  left: 0; /* align the label with the left of the bar */
+  width: 100%; /* set the width to fill the container */
+  height: 100%; /* set the height to fill the container */
+  display: flex; /* use flexbox to center the label horizontally and vertically */
+  align-items: center;
+  justify-content: center;
+  font-size: 16px; /* set the font size as desired */
+  color: #000; /* set the font color as desired */
+  text-align: center; /* center the text horizontally */
+}
+
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="top-container">
+      <div class="speed-container">
+        <!-- Speed container content -->
+        <h2>Speed</h2>
+        <input id = "speed" type="range" min="0" max="180" value="0" class="bar-slider">
+        <div class="speed-display">
+          <p id="speed-value">0</p>
+          <p id="speed_index"> Km/h</p>
+        </div>
+      </div>
+      <style>
+        .speed-display {
+          display: flex;
+        }
+      </style> 
+      
+      <div class="fuel-container">
+        <h2>Fuel Consumption</h2>
+        <input id = "fuel-consumption" type="range" min="-1" max="2" value="0" class="bar-slider">
+        <div class="fuelconsumption-display">
+          <p id="fuel-consumption-value">0</p>
+          <p id="fuel-consumption_index"> L/km</p>
+        </div>
+      </div>
+      <style>
+        .fuelconsumption-display {
+          display: flex;
+        }
+      </style>
+      <div class="rpm-container">
+        <!-- Speed container content -->
+        <h2>RPM</h2>
+        <input id = "rpm" type="range" min="0" max="4000" value="0" class="bar-slider">
+        <div class="rpm-display">
+          <p id="rpm-value">0</p>
+          <p id="rpm_index"> rpm</p>
+        </div>
+      </div>
+      <style>
+        .rpm-display {
+          display: flex;
+        }
+      </style>
+      </div>
+    <div class = "bottom-container">
+    <div class="kpi-container">
+      <!-- KPI container content -->
+      <h2>KPI Metrics</h2>
+      <table>
+        <tr>
+          <td>Maximum speed</td>
+          <td id="max-speed">0</td>
+        </tr>
+        <tr>
+          <td>Average speed</td>
+          <td id="average-speed">0</td>
+        </tr>
+        <tr>
+          <td>Velocity standard deviation</td>
+          <td id="velocity-std">0</td>
+        </tr>
+        </table>
+    </div>
+      <table class="right">
+        <tr>
+          <th>Warning</th>
+          <th>Status</th>
+        </tr>
+        <tr>
+          <td>Sudden acceleration</td>
+          <td id="sudden-acceleration">No</td>
+        </tr>
+        <tr>
+          <td>Sudden deceleration</td>
+          <td id="sudden-deceleration">No</td>
+        </tr>
+        <tr>
+          <td>High RPM</td>
+          <td id="high-rpm">No</td>
+        </tr>
+        <tr>
+        <td>Idling</td>
+        <td id="idling">No</td>
+      </tr>
+        <tr>
+          <td>Cruising</td>
+          <td id="cruising">No</td>
+        </tr>
+      </table>
+  </div>
+</div>
+  <!-- Add a link to your JavaScript file here -->
+  <script>
+    setInterval(function() {
+    // Make a request to the /kpi route to get the latest KPI values
+    fetch('/kpi')
+      .then(response => response.json())
+      .then(kpi => {
+        // Update the speed element
+        document.getElementById('speed').value = kpi.speed;;
+        document.getElementById('speed-value').innerHTML = kpi.speed.toFixed(2);
+        // Update the fuel consumption element
+        document.getElementById('fuel-consumption').value = kpi.fuel_consumption;;
+        document.getElementById('fuel-consumption-value').innerHTML = kpi.fuel_consumption.toFixed(2);
+
+        document.getElementById('rpm').value = kpi.rpm;;
+        document.getElementById('rpm-value').innerHTML = kpi.rpm.toFixed(2);
+        // Update the sudden acceleration element
+        document.getElementById('sudden-acceleration').innerHTML = kpi.sudden_acceleration ? 'Yes' : 'No';
+        document.getElementById('sudden-acceleration').setAttribute("value", kpi.sudden_acceleration ? "Yes" : "No");
+        // Update the sudden deceleration element
+        document.getElementById('sudden-deceleration').innerHTML = kpi.sudden_deceleration ? 'Yes' : 'No';
+        document.getElementById('sudden-deceleration').setAttribute("value", kpi.sudden_deceleration ? "Yes" : "No");
+        // Update the maximum speed element
+        document.getElementById('max-speed').innerHTML = kpi.max_speed.toFixed(2);;
+        // Update the minimum speed element
+        document.getElementById('average-speed').innerHTML = kpi.average_speed.toFixed(2);
+        // Update the velocity standard deviation element
+        document.getElementById('velocity-std').innerHTML = kpi.velocity_std_dev.toFixed(2);
+        // Update the high RPM element
+        document.getElementById('high-rpm').innerHTML = kpi.high_rpm ? 'Yes' : 'No';
+        document.getElementById('high-rpm').setAttribute("value", kpi.high_rpm ? "Yes" : "No");
+        // Update the idling element
+        document.getElementById('idling').innerHTML = kpi.idling ? 'Yes' : 'No';
+        document.getElementById('idling').setAttribute("value", kpi.idling ? "Yes" : "No");
+        // Update the cruising element
+        document.getElementById('cruising').innerHTML = kpi.cruising ? 'Yes' : 'No';
+        document.getElementById('cruising').setAttribute("value", kpi.cruising ? "Yes" : "No");
+      });
+  }, 1000); // Update the dashboard every second
+  </script>
+</body>
+</html>
